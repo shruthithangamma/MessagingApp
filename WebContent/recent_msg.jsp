@@ -11,12 +11,11 @@
 </head>
 <body>
 <c:import url="navbar.jsp"></c:import>
-<c:forEach items="${messages}" var="msg">
-<p>
+ <p>
   <label>${msg.name}</label> <br/>
   <textarea rows="3" cols="50">${msg.message}</textarea>
   </p>
-</c:forEach>
+ 
 <a href="index.jsp">Back</a>
 </body>
 </html>

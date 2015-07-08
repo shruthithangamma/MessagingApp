@@ -40,7 +40,23 @@ public class MessageApp extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
+		String action = request.getParameter("action");
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		if(action.equals("recent")) { 
+			Message msg = (Message) em.createQuery("select d from Message d order by d.messagedate DESC").setMaxResults(1).getSingleResult();
+			request.setAttribute("msg", msg);
+			request.getRequestDispatcher("recent_msg.jsp").forward(request, response);
+			
+			
+		} else if (action.equals("older")) {
+			 List<Message> messages =  em.createQuery("select d from Message d").getResultList();
+			 request.setAttribute("messages", messages);
+			 request.getRequestDispatcher("Display.jsp").forward(request, response);
+			
+	
+		} else {
+			doPost(request, response);
+		}
 	}
 
 	/**
